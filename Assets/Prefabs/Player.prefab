@@ -99,9 +99,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 3
-  jumpForce: 15
-  forceArrow: 1000
-  arrowPrefab: {fileID: 6771745075157334808, guid: 1f82a35feaae47d44a4a1ef88dc705d5, type: 3}
+  jumpForce: 17
+  jumpDelay: 0.5
+  forceProjectile: 900
+  timeLaunch: 1
+  projectilePrefab: {fileID: 6771745075157334808, guid: 1f82a35feaae47d44a4a1ef88dc705d5, type: 3}
+  crossbowPrefab: {fileID: 1665851155520056730, guid: da1047f7a58753d43a71743cf8fa2a65, type: 3}
+  controller: 0
 --- !u!61 &4513019993566695219
 BoxCollider2D:
   m_ObjectHideFlags: 0
