@@ -27,6 +27,10 @@ public class PlayerController : MonoBehaviour
     // Controller
     public bool controller = true; // Is the player using a controller ?
 
+    // Health
+    public int maxHealth = 20;
+    public int health;
+
 
     /*** Private variables ***/
 
@@ -87,6 +91,8 @@ public class PlayerController : MonoBehaviour
         direction = new Vector2(lookX, 0f);
 
         animator = GetComponent<Animator>();
+
+        health = maxHealth;
 
         rigidbody2d = GetComponent<Rigidbody2D>();
 
@@ -195,6 +201,7 @@ public class PlayerController : MonoBehaviour
 
     void OnCollisionEnter2D(Collision2D other)
     {
+        Debug.Log(other.collider.tag);
         // Checking if player is on ground and if he is on top of a platform
         if (other.collider.tag == "ground" && other.enabled)
         {
