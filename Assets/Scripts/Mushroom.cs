@@ -12,7 +12,6 @@ public class Mushroom : MonoBehaviour
     void OnTriggerEnter2D(Collider2D other)
     {
 
-        Debug.Log("aie");
         PlayerController player = other.gameObject.GetComponent<PlayerController>();
         if (player != null && player.health > 0)
         {
