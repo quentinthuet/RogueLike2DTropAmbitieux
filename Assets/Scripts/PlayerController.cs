@@ -11,6 +11,7 @@ public class PlayerController : MonoBehaviour
 
     // Movement
     public float speed = 1.0f; // Horizontal movement speed
+    public Vector2 getPosition { get { return position; } }
 
     // Jump
     public float jumpForce = 15.0f; // Jump force
@@ -29,7 +30,8 @@ public class PlayerController : MonoBehaviour
 
     // Health
     public int maxHealth = 20;
-    public int health;
+    public int health { get { return currentHealth; } }
+    public float timeInvincible = 1.0f;
 
 
     /*** Private variables ***/
@@ -58,6 +60,11 @@ public class PlayerController : MonoBehaviour
     // Animator
     Animator animator; // Animator
     float lookX; // Look direction
+
+    // Health
+    int currentHealth;
+    bool isInvincible;
+    float invincibleTimer;
 
     // Others
     Vector2 position; // Player position
@@ -92,7 +99,7 @@ public class PlayerController : MonoBehaviour
 
         animator = GetComponent<Animator>();
 
-        health = maxHealth;
+        currentHealth = maxHealth;
 
         rigidbody2d = GetComponent<Rigidbody2D>();
 
@@ -185,7 +192,15 @@ public class PlayerController : MonoBehaviour
 
         // Crossbow position
         bow.transform.position = transform.position + lookX * new Vector3(bowRelativePos.x, bowRelativePos.y, 0);
-
+        
+        // Is the player still invincible ?
+        if (isInvincible)
+        {
+            invincibleTimer -= Time.deltaTime;
+            Debug.Log(invincibleTimer);
+            if (invincibleTimer < 0)
+                isInvincible = false;
+        }
     }
 
     void FixedUpdate()
@@ -201,7 +216,6 @@ public class PlayerController : MonoBehaviour
 
     void OnCollisionEnter2D(Collision2D other)
     {
-        Debug.Log(other.collider.tag);
         // Checking if player is on ground and if he is on top of a platform
         if (other.collider.tag == "ground" && other.enabled)
         {
@@ -247,5 +261,23 @@ public class PlayerController : MonoBehaviour
         yield return null;
         jumped = false;
     }
+
+    public void ChangeHealth(int amount)
+    {
+        if (amount < 0)
+        {
+            //animator.SetTrigger("Hit");
+            if (isInvincible)
+            {
+                return;
+            }
+            isInvincible = true;
+            invincibleTimer = timeInvincible;
+        }
+
+        currentHealth = Mathf.Clamp(currentHealth + amount, 0, maxHealth);
+        HealthBar.SetHealthBarValue(currentHealth);
+    }
+
 }
 

@@ -27,8 +27,7 @@ public class Stain : MonoBehaviour
             PlayerController player = other.gameObject.GetComponent<PlayerController>();
             if (player != null && player.health > 0)
             {
-                player.health = player.health - 1;
-                HealthBar.SetHealthBarValue(player.health);
+                player.ChangeHealth(- 1);
             }
         }
     }
