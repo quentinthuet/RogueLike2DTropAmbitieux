@@ -8,6 +8,8 @@ TagManager:
   - border
   - mushroom
   - puddle
+  - noFallRight
+  - noFallLeft
   layers:
   - Default
   - TransparentFX
