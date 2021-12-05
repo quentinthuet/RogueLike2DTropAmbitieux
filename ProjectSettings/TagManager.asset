@@ -8,6 +8,8 @@ TagManager:
   - border
   - mushroom
   - puddle
+  - noFallRight
+  - noFallLeft
   layers:
   - Default
   - TransparentFX
@@ -19,7 +21,7 @@ TagManager:
   - Projectiles
   - Platforms
   - NoCollisionProjectiles
-  - 
+  - CharactersTrigger
   - 
   - 
   - 
