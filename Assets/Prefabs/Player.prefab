@@ -107,7 +107,7 @@ MonoBehaviour:
   bowPrefab: {fileID: 1665851155520056730, guid: da1047f7a58753d43a71743cf8fa2a65, type: 3}
   controller: 0
   maxHealth: 20
-  health: 0
+  timeInvincible: 1
 --- !u!61 &4513019993566695219
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -152,7 +152,7 @@ Rigidbody2D:
   m_GravityScale: 3
   m_Material: {fileID: 0}
   m_Interpolate: 0
-  m_SleepingMode: 1
+  m_SleepingMode: 0
   m_CollisionDetection: 0
   m_Constraints: 4
 --- !u!95 &2438253988216159711

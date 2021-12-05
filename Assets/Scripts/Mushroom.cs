@@ -9,15 +9,12 @@ public class Mushroom : MonoBehaviour
     {
 
     }
-    void OnTriggerEnter2D(Collider2D other)
+    void OnTriggerStay2D(Collider2D other)
     {
-
         PlayerController player = other.gameObject.GetComponent<PlayerController>();
         if (player != null && player.health > 0)
         {
-            player.health = player.health - 1;
-
-            HealthBar.SetHealthBarValue(player.health);
+            player.ChangeHealth(-1);
         }
     }
 }

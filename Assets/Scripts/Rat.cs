@@ -8,6 +8,10 @@ public class Rat : MonoBehaviour
     // Movement
     public float speed = 1.0f; // Horizontal movement speed
 
+    // Health
+    public int maxHealth = 3;
+    public int health { get { return currentHealth; } }
+
     /*** Private variables ***/
     // Player
     PlayerController player;
@@ -16,6 +20,9 @@ public class Rat : MonoBehaviour
     float horizontal;
     bool goLeft;
     bool goRight;
+        
+    // Health
+    int currentHealth;
 
     // Animator
     Animator animator;
@@ -32,6 +39,7 @@ public class Rat : MonoBehaviour
         player = FindObjectOfType<PlayerController>();
         goLeft = true;
         goRight = true;
+        currentHealth = maxHealth;  
     }
 
     void FixedUpdate()
@@ -41,7 +49,6 @@ public class Rat : MonoBehaviour
         {
             horizontal = Mathf.Sign(player.getPosition.x - position.x);
             animator.SetFloat("Movement", horizontal);
-            Debug.Log("Left? " + goLeft + ", Right? " + goRight + ", horizontal: " + horizontal);
             if (!((!goLeft && (horizontal < 0)) || (!goRight && (horizontal > 0))))
             {
                 animator.SetBool("Moving", true);
@@ -57,17 +64,39 @@ public class Rat : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        goLeft = true;
-        goRight = true;
         if (other.tag == "noFallLeft")
             goLeft = false;
         else if (other.tag == "noFallRight")
             goRight = false;
+        Projectile projectile = other.gameObject.GetComponent<Projectile>();
+        if (projectile != null && this.health > 0)
+        {
+            Destroy(other.gameObject);
+            this.ChangeHealth(-1);
+            if (this.health <= 0) 
+                Destroy(gameObject);
+        }
+    }
+
+    private void OnTriggerStay2D(Collider2D other)
+    {
+        if (other.tag == "Player" && player.health > 0)
+        {
+            player.ChangeHealth(-1);
+        }
     }
 
     private void OnTriggerExit2D(Collider2D other)
     {
-        goLeft = true;
-        goRight = true;
+        if (other.tag == "noFallLeft" || other.tag == "noFallRight") 
+        {
+            goLeft = true;
+            goRight = true;
+        }
+    }
+
+    public void ChangeHealth(int amount)
+    {
+        currentHealth = Mathf.Clamp(currentHealth + amount, 0, maxHealth);
     }
 }
